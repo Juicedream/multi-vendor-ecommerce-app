@@ -1,7 +1,26 @@
 import { Link } from "react-router-dom";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
+import { useState } from "react";
 
 const Login = () => {
+  // States
+  const [state, setState] = useState({
+    email: "",
+    password: "",
+  });
+
+  // Functions
+  const inputHandle = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value, // Checks the name of each input and set its value e.g name: (value of state.name)
+    });
+  }
+  const submitForm = (e) => {
+    e.preventDefault();
+    console.log(state);
+  }
+
   return (
     <div className="min-w-screen min-h-screen flex justify-center items-center bg-[#cdcae9]">
       <div className="w-[350px] text-[#ffffff] p-2">
@@ -11,16 +30,18 @@ const Login = () => {
             Please sign in to your account
           </p>
           {/* Begining of Login form */}
-          <form>
+          <form onSubmit={submitForm}>
             {/* Email */}
             <div className="flex flex-col w-full gap-1 mb-3">
               <label htmlFor="email">Email</label>
               <input
                 className="px-3 py-2 outline-none border border-slate-400 bg-transparent rounded-md"
-                type="text"
+                type="email"
                 name="email"
                 id="email"
                 placeholder="Email"
+                onChange={inputHandle}
+                value={state.email}
                 required
               />
             </div>
@@ -33,10 +54,12 @@ const Login = () => {
                 name="password"
                 id="password"
                 placeholder="Password"
+                onChange={inputHandle}
+                value={state.password}
                 required
               />
             </div>
-           
+
             {/* Sign up button */}
             <button className="bg-slate-800 w-full hover:shadow-blue-300/50 cursor-pointer hover:shadow-lg text-white rounded-md px-7 py-2 mb-3">
               Sign In
@@ -44,8 +67,7 @@ const Login = () => {
             {/* Already have an account */}
             <div className="flex items-center gap-3 mb-3 justify-center">
               <p>
-                Don't have an account?
-                {" "}
+                Don't have an account?{" "}
                 <Link className="font-bold" to="/register">
                   Sign Up
                 </Link>
@@ -55,9 +77,7 @@ const Login = () => {
             <div className="w-full flex justify-center items-center mb-3">
               <div className="w-[45%] bg-slate-700 h-px"></div>
               <div className="w-[10%] flex justify-center items-center">
-                <span className="pb-1">
-                  Or
-                </span>
+                <span className="pb-1">Or</span>
               </div>
               <div className="w-[45%] bg-slate-700 h-px"></div>
             </div>
@@ -70,7 +90,7 @@ const Login = () => {
               </div>
               <div className="w-[135px] h-[35px] flex rounded-md bg-blue-700 shadow-lg hover:shadow-blue-700/50 justify-center cursor-pointer items-center overflow-hidden">
                 <span>
-                 <FaFacebook />
+                  <FaFacebook />
                 </span>
               </div>
             </div>

@@ -1,7 +1,28 @@
 import { Link } from "react-router-dom";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
+import { useState } from "react";
 
 const Register = () => {
+  // States
+  const [state, setState] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  // Functions
+  const inputHandle = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value, // Checks the name of each input and set its value e.g name: (value of state.name)
+    });
+  };
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    console.log(state);
+  };
+
   return (
     <div className="min-w-screen min-h-screen flex justify-center items-center bg-[#cdcae9]">
       <div className="w-[350px] text-[#ffffff] p-2">
@@ -11,7 +32,7 @@ const Register = () => {
             Please register your account
           </p>
           {/* Begining of Registration form */}
-          <form>
+          <form onSubmit={submitForm}>
             {/* Name */}
             <div className="flex flex-col w-full gap-1 mb-3">
               <label htmlFor="name">Name</label>
@@ -21,6 +42,8 @@ const Register = () => {
                 name="name"
                 id="name"
                 placeholder="Name"
+                onChange={inputHandle}
+                value={state.name}
                 required
               />
             </div>
@@ -29,10 +52,12 @@ const Register = () => {
               <label htmlFor="email">Email</label>
               <input
                 className="px-3 py-2 outline-none border border-slate-400 bg-transparent rounded-md"
-                type="text"
+                type="email"
                 name="email"
                 id="email"
                 placeholder="Email"
+                onChange={inputHandle}
+                value={state.email}
                 required
               />
             </div>
@@ -45,6 +70,8 @@ const Register = () => {
                 name="password"
                 id="password"
                 placeholder="Password"
+                onChange={inputHandle}
+                value={state.password}
                 required
               />
             </div>
@@ -56,7 +83,9 @@ const Register = () => {
                 name="checkbox"
                 id="checkbox"
               />
-              <label htmlFor="checkbox">I agree to privacy policy & terms</label>
+              <label htmlFor="checkbox">
+                I agree to privacy policy & terms
+              </label>
             </div>
             {/* Sign up button */}
             <button className="bg-slate-800 w-full hover:shadow-blue-300/50 cursor-pointer hover:shadow-lg text-white rounded-md px-7 py-2 mb-3">
@@ -65,8 +94,7 @@ const Register = () => {
             {/* Already have an account */}
             <div className="flex items-center gap-3 mb-3 justify-center">
               <p>
-                Already have an account?
-                {" "}
+                Already have an account?{" "}
                 <Link className="font-bold" to="/login">
                   Sign In
                 </Link>
@@ -76,9 +104,7 @@ const Register = () => {
             <div className="w-full flex justify-center items-center mb-3">
               <div className="w-[45%] bg-slate-700 h-px"></div>
               <div className="w-[10%] flex justify-center items-center">
-                <span className="pb-1">
-                  Or
-                </span>
+                <span className="pb-1">Or</span>
               </div>
               <div className="w-[45%] bg-slate-700 h-px"></div>
             </div>
@@ -91,7 +117,7 @@ const Register = () => {
               </div>
               <div className="w-[135px] h-[35px] flex rounded-md bg-blue-700 shadow-lg hover:shadow-blue-700/50 justify-center cursor-pointer items-center overflow-hidden">
                 <span>
-                 <FaFacebook />
+                  <FaFacebook />
                 </span>
               </div>
             </div>
