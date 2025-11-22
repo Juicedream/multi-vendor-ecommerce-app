@@ -1,14 +1,19 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { PropagateLoader } from "react-spinners";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 //custom modules
 import { siteUrl } from "../../utils/constants";
-import { admin_login } from "../../store/Reducers/authReducer";
-
+import { admin_login, messageClear } from "../../store/Reducers/authReducer";
 
 const AdminLogin = () => {
+  // Navigation
+  const navigate = useNavigate();
   // reducers for api calls from redux store
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const { isLoading, errorMessage, successMessage } = useSelector((state) => state.auth);
   // States
   const [state, setState] = useState({
     email: "",
@@ -24,9 +29,29 @@ const AdminLogin = () => {
   };
   const submitForm = (e) => {
     e.preventDefault();
-    dispatch(admin_login(state))
-    // console.log(state);
+    dispatch(admin_login(state));
   };
+
+  const overrideStyle = {
+    display: "flex",
+    margin: "0 auto",
+    height: "24px",
+    justifyContent: "center",
+    alignItem: "center",
+  };
+
+  //Use effects
+  useEffect(() => {
+    if(errorMessage) {
+      toast.error(errorMessage)
+      dispatch(messageClear())
+    }
+    if(successMessage){
+      toast.success(successMessage)
+      dispatch(messageClear())
+      navigate("/") // Navigates to home after login successful
+    }
+  }, [dispatch, errorMessage, successMessage])
 
   return (
     <div className="min-w-screen min-h-screen flex justify-center items-center bg-[#cdcae9]">
@@ -74,8 +99,18 @@ const AdminLogin = () => {
               />
             </div>
             {/* Login button */}
-            <button className="bg-slate-800 w-full hover:shadow-blue-300/50 cursor-pointer hover:shadow-lg text-white rounded-md px-7 py-2 mb-3">
-              Login
+            <button
+              disabled={isLoading ? true : false}
+              className="bg-slate-800 w-full hover:shadow-blue-300/50 cursor-pointer hover:shadow-lg text-white rounded-md px-7 py-2 mb-3"
+            >
+              {isLoading ? (
+                <PropagateLoader 
+                color="#fff"
+                cssOverride={overrideStyle} 
+                />
+              ) : (
+                "Login"
+              )}
             </button>
           </form>
           {/* End of Admin Login form */}
