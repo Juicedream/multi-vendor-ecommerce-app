@@ -1,8 +1,7 @@
-import { Link } from "react-router-dom";
-import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { useState } from "react";
+import { siteUrl } from "../../utils/constants";
 
-const Login = () => {
+const AdminLogin = () => {
   // States
   const [state, setState] = useState({
     email: "",
@@ -15,21 +14,28 @@ const Login = () => {
       ...state,
       [e.target.name]: e.target.value, // Checks the name of each input and set its value e.g name: (value of state.email)
     });
-  }
+  };
   const submitForm = (e) => {
     e.preventDefault();
     console.log(state);
-  }
+  };
 
   return (
     <div className="min-w-screen min-h-screen flex justify-center items-center bg-[#cdcae9]">
       <div className="w-[350px] text-[#ffffff] p-2">
         <div className="bg-[#6f68d1] p-4 rounded-md">
-          <h2 className="text-xl mb-3 font-bold">Welcome Back to Ecommerce</h2>
-          <p className="text-sm mb-3 font-medium">
-            Please sign in to your account
-          </p>
-          {/* Begining of Login form */}
+          {/* Logo image */}
+          <div className="h-[70px] flex flex-col justify-center items-center">
+            <div className="w-[180px] h-[50px]">
+              <img
+                className="w-full h-full"
+                src={`${siteUrl}/images/logo.png`}
+                alt="Shop logo"
+              />
+            </div>
+            <p className="text-sm w-20 text-slate-400">Admin Login</p>
+          </div>
+          {/* Begining of Admin Login form */}
           <form onSubmit={submitForm}>
             {/* Email */}
             <div className="flex flex-col w-full gap-1 mb-3">
@@ -59,47 +65,16 @@ const Login = () => {
                 required
               />
             </div>
-
-            {/* Sign in button */}
+            {/* Login button */}
             <button className="bg-slate-800 w-full hover:shadow-blue-300/50 cursor-pointer hover:shadow-lg text-white rounded-md px-7 py-2 mb-3">
-              Sign In
+              Login
             </button>
-            {/* Already have an account */}
-            <div className="flex items-center gap-3 mb-3 justify-center">
-              <p>
-                Don't have an account?{" "}
-                <Link className="font-bold" to="/register">
-                  Sign Up
-                </Link>
-              </p>
-            </div>
-            {/* Dividing line */}
-            <div className="w-full flex justify-center items-center mb-3">
-              <div className="w-[45%] bg-slate-700 h-px"></div>
-              <div className="w-[10%] flex justify-center items-center">
-                <span className="pb-1">Or</span>
-              </div>
-              <div className="w-[45%] bg-slate-700 h-px"></div>
-            </div>
-            {/* Social sign in */}
-            <div className="flex justify-center items-center gap-3">
-              <div className="w-[135px] h-[35px] flex rounded-md bg-orange-700 shadow-lg hover:shadow-orange-700/50 justify-center cursor-pointer items-center overflow-hidden">
-                <span>
-                  <FaGoogle />
-                </span>
-              </div>
-              <div className="w-[135px] h-[35px] flex rounded-md bg-blue-700 shadow-lg hover:shadow-blue-700/50 justify-center cursor-pointer items-center overflow-hidden">
-                <span>
-                  <FaFacebook />
-                </span>
-              </div>
-            </div>
           </form>
-          {/* End of Login form */}
+          {/* End of Admin Login form */}
         </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default AdminLogin;
