@@ -63,7 +63,7 @@ const Register = () => {
               Sign Up
             </button>
             {/* Already have an account */}
-            <div className="flex items-center gap-3 justify-center">
+            <div className="flex items-center gap-3 mb-3 justify-center">
               <p>
                 Already have an account?
                 {" "}
