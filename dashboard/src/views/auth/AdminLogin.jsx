@@ -1,7 +1,14 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+
+//custom modules
 import { siteUrl } from "../../utils/constants";
+import { admin_login } from "../../store/Reducers/authReducer";
+
 
 const AdminLogin = () => {
+  // reducers for api calls from redux store
+  const dispatch = useDispatch()
   // States
   const [state, setState] = useState({
     email: "",
@@ -17,7 +24,8 @@ const AdminLogin = () => {
   };
   const submitForm = (e) => {
     e.preventDefault();
-    console.log(state);
+    dispatch(admin_login(state))
+    // console.log(state);
   };
 
   return (
